@@ -19,8 +19,8 @@ It includes smooth scroll navigation, animated sections, and a clean layout to s
 
 ### 1. Clone this repo
 ```bash
-git clone https://github.com/yoelamadeo/portfolio-next.git
-cd portfolio-next
+git clone https://github.com/ShotZ9/Portofolio-Yoel-Amadeo-Pratomo.git
+cd portofolio-yoel-amadeo-pratomo
 ```
 
 ### 2. Install dependencies
@@ -51,12 +51,12 @@ styles/
 ```
 
 ## 📤 Deployment
-Deploy it easily on [Vercel](https://vercel.com/) – just push to a GitHub repo and import the project.
+Deploy it easily on [Here](https://portofolio-yoel-amadeo-pratomo.vercel.app/) – just push to a GitHub repo and import the project.
 
 ## 📬 Contact
 - Email: yamadeo9@gmail.com
-- GitHub: [yoelamadeo](https://github.com/yoelamadeo)
-- LinkedIn: [yoelamadeo](https://linkedin.com/in/yoelamadeo)
+- GitHub: [ShotZ9](https://github.com/ShotZ9)
+- LinkedIn: [yoelamadeo](https://www.linkedin.com/in/yoelamadeop/)
 
 ---
 
