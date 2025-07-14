@@ -39,7 +39,18 @@ export default function Navbar() {
               <a
                 key={item.href}
                 href={item.href}
-                onClick={() => setIsOpen(false)}
+                onClick={(e) => {
+                  e.preventDefault()
+                  if (item.href === '#home') {
+                    window.scrollTo({ top: 0, behavior: 'smooth' })
+                  } else {
+                    const target = document.querySelector(item.href)
+                    if (target) {
+                      target.scrollIntoView({ behavior: 'smooth' })
+                    }
+                  }
+                  setIsOpen(false)
+                }}
                 className="block text-gray-800 hover:text-indigo-600 transition font-medium text-sm"
               >
                 {item.label}

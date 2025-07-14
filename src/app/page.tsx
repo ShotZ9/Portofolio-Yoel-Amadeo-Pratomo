@@ -1,21 +1,15 @@
 'use client'
 import Image from 'next/image'
 import AnimatedWrapper from '@/components/AnimatedWrapper'
+import HeroCanvas from '@/components/HeroCanvas'
 import { motion } from 'framer-motion'
-import { FaEnvelope, FaGithub, FaLinkedin } from 'react-icons/fa'
+import { FaEnvelope, FaGithub, FaLinkedin, FaInstagram } from 'react-icons/fa'
 import { FiDownload } from 'react-icons/fi'
+import React, { useRef, useEffect } from 'react'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
 
-function ContactItem({
-  icon,
-  label,
-  value,
-  link,
-}: {
-  icon: React.ReactNode
-  label: string
-  value: string
-  link: string
-}) {
+function ContactItem({ icon, label, value, link }: { icon: React.ReactNode; label: string; value: string; link: string }) {
   return (
     <a
       href={link}
@@ -32,16 +26,78 @@ function ContactItem({
   )
 }
 
+gsap.registerPlugin(ScrollTrigger)
+
+const projects = [
+  {
+    title: 'Sistem Konsultasi Medis',
+    desc: 'Aplikasi web konsultasi jarak jauh antara dokter dan pasien, bekerja sama dengan Fakultas Kedokteran UB.',
+    link: 'https://github.com/pH7-Simpl/bloodpressure-prototype',
+  },
+  {
+    title: 'CV. Agroindo Cipta Sejahtera',
+    desc: 'Website company profile profesional untuk perusahaan agribisnis, dilengkapi fitur produk, kontak, dan informasi layanan.',
+    link: 'https://github.com/LagMad/AgroIndo',
+  },
+  {
+    title: 'Website GKI Batu',
+    desc: 'Website jemaat GKI Batu berbasis Next.js dengan tampilan modern dan interaktif, menampilkan jadwal ibadah, artikel, serta galeri foto.',
+    link: 'https://github.com/ShotZ9/trialgkibatu',
+  },
+  {
+    title: 'Website GKI Summercamp',
+    desc: 'Website event Summercamp GKI dengan sistem pengumpulan dana online dan informasi kegiatan, dikembangkan menggunakan Next.js dan Supabase.',
+    link: 'https://github.com/ShotZ9/gkisummercamp',
+  },
+  {
+    title: 'FinMate',
+    desc: 'Aplikasi pencatat keuangan cerdas berbasis machine learning, dirancang untuk meningkatkan literasi finansial generasi muda.',
+    link: 'https://github.com/ShotZ9/capstone-project-CC25-CF295',
+  },
+]
+
 export default function Home() {
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const triggerRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const el = sectionRef.current
+      if (!el) return
+
+      gsap.fromTo(
+        el,
+        { x: '0%' },
+        {
+          x: `-${50 * (projects.length - 2)}vw`,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: triggerRef.current,
+            start: 'top top',
+            end: `+=${projects.length * 600}`,
+            scrub: 0.6,
+            pin: true,
+            anticipatePin: 1,
+          },
+        }
+      )
+    }, sectionRef)
+
+    return () => ctx.revert()
+  }, [])
   return (
-    <main>
+    <main className='relative overflow-hidden'>
+      <div className="absolute inset-0 z-0">
+        <HeroCanvas />
+      </div>
       {/* Hero Section */}
       <section
         id="home"
-        className="min-h-screen bg-background text-center flex flex-col justify-center items-center px-6"
+        className="min-h-screen bg-background text-center flex flex-col justify-center items-center"
       >
+        {/* Canvas Partikel */}
+
         <motion.h1
-          className="text-5xl md:text-6xl font-extrabold text-text-main mb-4"
+          className="text-5xl md:text-6xl font-extrabold text-text-main mb-4 z-10"
           initial={{ y: -40, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6 }}
@@ -68,7 +124,7 @@ export default function Home() {
           {/* Tombol Lihat Proyek */}
           <a
             href="#portfolio"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 transition"
+            className="inline-flex text-center items-center gap-2 px-6 py-3 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 transition z-10"
           >
             Lihat Proyek
           </a>
@@ -77,7 +133,7 @@ export default function Home() {
           <a
             href="/cv/yoel-cv.pdf"
             download
-            className="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 transition"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 transition z-10"
           >
             <FiDownload className="w-5 h-5" />
             Download CV
@@ -87,7 +143,7 @@ export default function Home() {
 
       {/* About Section */}
       <AnimatedWrapper>
-        <section id="about" className="py-4 px-4 bg-background">
+        <section id="about" className="bg-background">
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-10">
             <Image
               src="/images/yoel.jpg"
@@ -100,10 +156,10 @@ export default function Home() {
             <div className="text-center md:text-left max-w-xl">
               <h2 className="text-3xl font-bold mb-4 text-text-main">Tentang Saya</h2>
               <p className="text-text-subtle mb-6 leading-relaxed">
-                Saya adalah mahasiswa semester 6 di FILKOM UB yang aktif dalam pengembangan sistem perangkat lunak dan machine learning. Fokus saya saat ini pada software architecture, kolaborasi tim, dan pengembangan aplikasi real-world.
+                Saya merupakan mahasiswa semester 7 di FILKOM UB yang aktif dalam pengembangan sistem perangkat lunak dan machine learning. Fokus utama saya meliputi <em>software architecture</em>, kolaborasi tim, pengembangan aplikasi dunia nyata, serta <em>human resources development</em>.
               </p>
               <div className="flex flex-wrap gap-3 justify-center md:justify-start">
-                {['Next.js', 'Vue.js', 'Golang', 'Tailwind CSS', 'Python', 'TensorFlow'].map((skill) => (
+                {['Next.js', 'Vue.js', 'PHP', 'Golang', 'Tailwind CSS', 'Python', 'TensorFlow'].map((skill) => (
                   <span
                     key={skill}
                     className="bg-indigo-100 text-indigo-700 px-4 py-1 rounded-full text-sm font-medium"
@@ -119,38 +175,37 @@ export default function Home() {
 
       {/* Portfolio Section */}
       <AnimatedWrapper>
-        <section id="portfolio" className="py-24 px-4 bg-background">
-          <div className="max-w-6xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-12 text-text-main">Proyek Portofolio</h2>
-            <div className="grid md:grid-cols-2 gap-8">
-              {[
-                {
-                  title: 'Sistem Konsultasi Medis',
-                  desc: 'Aplikasi web konsultasi jarak jauh dokter-pasien, dibuat bersama FK UB.',
-                  link: 'https://github.com/yoelamadeo/medconsult',
-                },
-                {
-                  title: 'FinMate',
-                  desc: 'Aplikasi pencatat keuangan berbasis prediksi & visualisasi, fokus literasi finansial.',
-                  link: 'https://github.com/yoelamadeo/finmate',
-                },
-              ].map((proj, i) => (
-                <motion.div
+        <section id="portfolio" className="relative bg-background">
+          <div ref={triggerRef} className="overflow-hidden">
+            <div
+              ref={sectionRef}
+              className="flex h-screen items-center px-8 box-border"
+              style={{ width: `calc(${projects.length} * 40vw)` }}
+            >
+              {projects.map((proj, i) => (
+                <div
                   key={i}
-                  whileHover={{ scale: 1.02 }}
-                  className="p-6 border border-border rounded-2xl shadow-sm hover:shadow-xl transition"
+                  className="min-w-[90vw] md:min-w-[20vw] mx-2 bg-background border border-gray-200 rounded-xl shadow-md p-6 flex flex-col justify-center items-center text-center box-border"
                 >
-                  <h3 className="text-xl font-semibold text-text-main mb-2">{proj.title}</h3>
-                  <p className="text-text-subtle mb-4">{proj.desc}</p>
-                  <a
-                    href={proj.link}
-                    className="text-primary font-medium hover:underline"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2, duration: 0.6 }}
+                    viewport={{ once: true }}
+                    className="max-w-md"
                   >
-                    Lihat Proyek →
-                  </a>
-                </motion.div>
+                    <h2 className="text-2xl font-semibold text-text-main mb-3">{proj.title}</h2>
+                    <p className="text-text-subtle mb-4">{proj.desc}</p>
+                    <a
+                      href={proj.link}
+                      className="text-primary font-medium hover:underline"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Lihat Proyek →
+                    </a>
+                  </motion.div>
+                </div>
               ))}
             </div>
           </div>
@@ -190,14 +245,20 @@ export default function Home() {
                 <ContactItem
                   icon={<FaGithub className="text-indigo-600" />}
                   label="GitHub"
-                  value="yoelamadeo"
-                  link="https://github.com/yoelamadeo"
+                  value="ShotZ9"
+                  link="https://github.com/ShotZ9"
                 />
                 <ContactItem
                   icon={<FaLinkedin className="text-indigo-600" />}
                   label="LinkedIn"
-                  value="yoelamadeo"
-                  link="https://linkedin.com/in/yoelamadeo"
+                  value="yoelamadeop"
+                  link="https://www.linkedin.com/in/yoelamadeop/"
+                />
+                <ContactItem
+                  icon={<FaInstagram className="text-indigo-600" />}
+                  label="Instagram"
+                  value="@yomadeo04"
+                  link="https://www.instagram.com/yomadeo04/"
                 />
               </div>
             </div>
