@@ -31,14 +31,15 @@ export default function HeroCanvas() {
         public directionX: number,
         public directionY: number,
         public size: number,
-        public color: string
+        public color: string,
+        private ctx: CanvasRenderingContext2D // simpan ctx sebagai properti
       ) {}
 
       draw() {
-        ctx.beginPath()
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false)
-        ctx.fillStyle = this.color
-        ctx.fill()
+        this.ctx.beginPath()
+        this.ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false)
+        this.ctx.fillStyle = this.color
+        this.ctx.fill()
       }
 
       update() {
@@ -58,7 +59,7 @@ export default function HeroCanvas() {
         const y = Math.random() * canvas.height
         const directionX = Math.random() * 0.4 - 0.2
         const directionY = Math.random() * 0.4 - 0.2
-        particlesArray.push(new Particle(x, y, directionX, directionY, size, particleSettings.color))
+        particlesArray.push(new Particle(x, y, directionX, directionY, size, particleSettings.color, ctx))
       }
     }
 
