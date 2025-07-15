@@ -13,8 +13,10 @@ export default function HeroCanvas() {
 
     let particlesArray: Particle[] = []
 
-    canvas.width = canvas.offsetWidth
-    canvas.height = canvas.offsetHeight
+    const getCanvasSize = () => ({
+      width: canvas.offsetWidth,
+      height: canvas.offsetHeight,
+    })
 
     const particleSettings = {
       count: 180,
@@ -32,7 +34,9 @@ export default function HeroCanvas() {
         public directionY: number,
         public size: number,
         public color: string,
-        private ctx: CanvasRenderingContext2D // simpan ctx sebagai properti
+        private ctx: CanvasRenderingContext2D,
+        private canvasWidth: number,
+        private canvasHeight: number
       ) {}
 
       draw() {
@@ -43,23 +47,32 @@ export default function HeroCanvas() {
       }
 
       update() {
-        if (this.x > canvas.width || this.x < 0) this.directionX = -this.directionX
-        if (this.y > canvas.height || this.y < 0) this.directionY = -this.directionY
+        if (this.x > this.canvasWidth || this.x < 0) this.directionX = -this.directionX
+        if (this.y > this.canvasHeight || this.y < 0) this.directionY = -this.directionY
         this.x += this.directionX
         this.y += this.directionY
         this.draw()
       }
+
+      setCanvasSize(width: number, height: number) {
+        this.canvasWidth = width
+        this.canvasHeight = height
+      }
     }
 
     const init = () => {
+      const { width, height } = getCanvasSize()
+      canvas.width = width
+      canvas.height = height
+
       particlesArray = []
       for (let i = 0; i < particleSettings.count; i++) {
         const size = particleSettings.radius
-        const x = Math.random() * canvas.width
-        const y = Math.random() * canvas.height
+        const x = Math.random() * width
+        const y = Math.random() * height
         const directionX = Math.random() * 0.4 - 0.2
         const directionY = Math.random() * 0.4 - 0.2
-        particlesArray.push(new Particle(x, y, directionX, directionY, size, particleSettings.color, ctx))
+        particlesArray.push(new Particle(x, y, directionX, directionY, size, particleSettings.color, ctx, width, height))
       }
     }
 
@@ -84,6 +97,9 @@ export default function HeroCanvas() {
     }
 
     const animate = () => {
+      const { width, height } = getCanvasSize()
+      particlesArray.forEach(p => p.setCanvasSize(width, height))
+
       requestAnimationFrame(animate)
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       particlesArray.forEach((p) => p.update())
@@ -91,8 +107,6 @@ export default function HeroCanvas() {
     }
 
     const handleResize = () => {
-      canvas.width = canvas.offsetWidth
-      canvas.height = canvas.offsetHeight
       init()
     }
 
