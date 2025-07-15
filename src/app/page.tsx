@@ -15,7 +15,7 @@ function ContactItem({ icon, label, value, link }: { icon: React.ReactNode; labe
       href={link}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex items-center gap-4 hover:bg-white p-3 rounded-lg border border-gray-200 transition shadow-sm"
+      className="flex items-center gap-4 hover:bg-[#313131] p-3 rounded-lg border border-gray-200 transition shadow-sm"
     >
       <div className="text-xl">{icon}</div>
       <div>
@@ -144,7 +144,7 @@ export default function Home() {
       {/* About Section */}
       <AnimatedWrapper>
         <section id="about" className="bg-background">
-          <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-10">
+          <div className="min-h-screen bg-background text-center flex flex-col justify-center items-center mx-auto flex flex-col md:flex-row items-center gap-10">
             <Image
               src="/images/yoel.jpg"
               alt="Yoel Amadeo"
@@ -175,7 +175,7 @@ export default function Home() {
 
       {/* Portfolio Section */}
       <AnimatedWrapper>
-        <section id="portfolio" className="relative bg-background">
+        <section id="portfolio" className="relative">
           <div ref={triggerRef} className="overflow-hidden">
             <div
               ref={sectionRef}
@@ -229,7 +229,7 @@ export default function Home() {
             </div>
 
             {/* Kontak */}
-            <div className="text-center md:text-left">
+            <div className="text-center md:text-left z-20">
               <h2 className="text-3xl font-bold mb-4 text-text-main">Hubungi Saya</h2>
               <p className="text-text-subtle mb-8">
                 Saya terbuka untuk diskusi, kolaborasi proyek, atau pertanyaan seputar teknologi.

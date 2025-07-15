@@ -108,7 +108,7 @@ export default function HeroCanvas() {
     <canvas
       id="hero-canvas"
       ref={canvasRef}
-      className="absolute inset-0 w-full h-full pointer-events-none z-10"
+      className="absolute inset-0 w-full h-full pointer-events-none z-1"
     />
   )
 }
