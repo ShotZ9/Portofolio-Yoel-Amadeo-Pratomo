@@ -2,6 +2,7 @@
 import Image from 'next/image'
 import AnimatedWrapper from '@/components/AnimatedWrapper'
 import HeroCanvas from '@/components/HeroCanvas'
+import FadeUpSection from '@/components/FadeUpSection'
 import { motion } from 'framer-motion'
 import { FaEnvelope, FaGithub, FaLinkedin, FaInstagram } from 'react-icons/fa'
 import { FiDownload } from 'react-icons/fi'
@@ -86,9 +87,14 @@ export default function Home() {
   }, [])
   return (
     <main className='relative overflow-hidden'>
-      <div className="absolute inset-0 z-0">
+      <motion.div
+        className="absolute inset-0 z-0"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.2 }}
+      >
         <HeroCanvas />
-      </div>
+      </motion.div>
       {/* Hero Section */}
       <section
         id="home"
@@ -144,32 +150,34 @@ export default function Home() {
       {/* About Section */}
       <AnimatedWrapper>
         <section id="about" className="bg-background">
-          <div className="min-h-screen bg-background text-center flex flex-col justify-center items-center mx-auto flex flex-col md:flex-row items-center gap-10">
-            <Image
-              src="/images/yoel.jpg"
-              alt="Yoel Amadeo"
-              width={240} // 60 x 4 = 240
-              height={240}
-              className="rounded-full object-cover shadow-lg"
-              priority
-            />
-            <div className="text-center md:text-left max-w-xl">
-              <h2 className="text-3xl font-bold mb-4 text-text-main">Tentang Saya</h2>
-              <p className="text-text-subtle mb-6 leading-relaxed">
-                Saya merupakan mahasiswa semester 7 di FILKOM UB yang aktif dalam pengembangan sistem perangkat lunak dan machine learning. Fokus utama saya meliputi <em>software architecture</em>, kolaborasi tim, pengembangan aplikasi dunia nyata, serta <em>human resources development</em>.
-              </p>
-              <div className="flex flex-wrap gap-3 justify-center md:justify-start">
-                {['Next.js', 'Vue.js', 'PHP', 'Golang', 'Tailwind CSS', 'Python', 'TensorFlow'].map((skill) => (
-                  <span
-                    key={skill}
-                    className="bg-indigo-100 text-indigo-700 px-4 py-1 rounded-full text-sm font-medium"
-                  >
-                    {skill}
-                  </span>
-                ))}
+          <FadeUpSection>
+            <div className="min-h-screen bg-background text-center flex flex-col justify-center items-center mx-auto flex flex-col md:flex-row items-center gap-10">
+              <Image
+                src="/images/yoel.jpg"
+                alt="Yoel Amadeo"
+                width={240} // 60 x 4 = 240
+                height={240}
+                className="rounded-full object-cover shadow-lg"
+                priority
+              />
+              <div className="text-center md:text-left max-w-xl">
+                <h2 className="text-3xl font-bold mb-4 text-text-main">Tentang Saya</h2>
+                <p className="text-text-subtle mb-6 leading-relaxed">
+                  Saya merupakan mahasiswa semester 7 di FILKOM UB yang aktif dalam pengembangan sistem perangkat lunak dan machine learning. Fokus utama saya meliputi <em>software architecture</em>, kolaborasi tim, pengembangan aplikasi dunia nyata, serta <em>human resources development</em>.
+                </p>
+                <div className="flex flex-wrap gap-3 justify-center md:justify-start">
+                  {['Next.js', 'Vue.js', 'PHP', 'Golang', 'Tailwind CSS', 'Python', 'TensorFlow'].map((skill) => (
+                    <span
+                      key={skill}
+                      className="bg-indigo-100 text-indigo-700 px-4 py-1 rounded-full text-sm font-medium"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
+          </FadeUpSection>
         </section>
       </AnimatedWrapper>
 
@@ -186,7 +194,7 @@ export default function Home() {
                 <div
                   key={i}
                   className="min-w-[90vw] md:min-w-[20vw] mx-2 bg-background border border-gray-200 rounded-xl shadow-md p-6 flex flex-col justify-center items-center text-center box-border"
-                >
+                >                  
                   <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -215,54 +223,56 @@ export default function Home() {
       {/* Contact Section */}
       <AnimatedWrapper>
         <section id="contact" className="py-24 px-4 bg-background">
-          <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-            {/* Gambar / Ilustrasi */}
-            <div className="flex justify-center">
-              <Image
-                src="/images/contact.svg"
-                alt="Contact Illustration"
-                width={500}
-                height={500}
-                className="w-full max-w-sm h-auto"
-                priority
-              />
-            </div>
-
-            {/* Kontak */}
-            <div className="text-center md:text-left z-20">
-              <h2 className="text-3xl font-bold mb-4 text-text-main">Hubungi Saya</h2>
-              <p className="text-text-subtle mb-8">
-                Saya terbuka untuk diskusi, kolaborasi proyek, atau pertanyaan seputar teknologi.
-              </p>
-
-              <div className="space-y-6">
-                <ContactItem
-                  icon={<FaEnvelope className="text-indigo-600" />}
-                  label="Email"
-                  value="yamadeo9@gmail.com"
-                  link="mailto:yamadeo9@gmail.com"
-                />
-                <ContactItem
-                  icon={<FaGithub className="text-indigo-600" />}
-                  label="GitHub"
-                  value="ShotZ9"
-                  link="https://github.com/ShotZ9"
-                />
-                <ContactItem
-                  icon={<FaLinkedin className="text-indigo-600" />}
-                  label="LinkedIn"
-                  value="yoelamadeop"
-                  link="https://www.linkedin.com/in/yoelamadeop/"
-                />
-                <ContactItem
-                  icon={<FaInstagram className="text-indigo-600" />}
-                  label="Instagram"
-                  value="@yomadeo04"
-                  link="https://www.instagram.com/yomadeo04/"
+          <FadeUpSection>
+            <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+              {/* Gambar / Ilustrasi */}
+              <div className="flex justify-center">
+                <Image
+                  src="/images/contact.svg"
+                  alt="Contact Illustration"
+                  width={500}
+                  height={500}
+                  className="w-full max-w-sm h-auto"
+                  priority
                 />
               </div>
+
+              {/* Kontak */}
+              <div className="text-center md:text-left z-20">
+                <h2 className="text-3xl font-bold mb-4 text-text-main">Hubungi Saya</h2>
+                <p className="text-text-subtle mb-8">
+                  Saya terbuka untuk diskusi, kolaborasi proyek, atau pertanyaan seputar teknologi.
+                </p>
+
+                <div className="space-y-6">
+                  <ContactItem
+                    icon={<FaEnvelope className="text-indigo-600" />}
+                    label="Email"
+                    value="yamadeo9@gmail.com"
+                    link="mailto:yamadeo9@gmail.com"
+                  />
+                  <ContactItem
+                    icon={<FaGithub className="text-indigo-600" />}
+                    label="GitHub"
+                    value="ShotZ9"
+                    link="https://github.com/ShotZ9"
+                  />
+                  <ContactItem
+                    icon={<FaLinkedin className="text-indigo-600" />}
+                    label="LinkedIn"
+                    value="yoelamadeop"
+                    link="https://www.linkedin.com/in/yoelamadeop/"
+                  />
+                  <ContactItem
+                    icon={<FaInstagram className="text-indigo-600" />}
+                    label="Instagram"
+                    value="@yomadeo04"
+                    link="https://www.instagram.com/yomadeo04/"
+                  />
+                </div>
+              </div>
             </div>
-          </div>
+          </FadeUpSection>
         </section>
       </AnimatedWrapper>
     </main>
